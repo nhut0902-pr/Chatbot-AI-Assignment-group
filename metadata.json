@@ -1,0 +1,5 @@
+{
+  "name": "AI Tutor Chatbot",
+  "description": "An AI-powered tutor chatbot that assists with homework, generates images and mind maps, and analyzes uploaded files and images to provide comprehensive learning support.",
+  "requestFramePermissions": []
+}
