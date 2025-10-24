@@ -1,3 +1,9 @@
+declare const process: {
+  env: {
+    API_KEY: string;
+  };
+};
+
 export enum AppMode {
   TUTOR = 'TUTOR',
   IMAGE_GEN = 'IMAGE_GEN',
