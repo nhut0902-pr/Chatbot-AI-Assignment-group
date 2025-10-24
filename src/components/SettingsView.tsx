@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
 import { SettingsContext } from '../contexts/SettingsContext';
-import { AccentColor, Theme } from '../types';
+import { AccentColor } from '../types';
 import SunIcon from './SunIcon';
 import MoonIcon from './icons/MoonIcon';
 

@@ -48,8 +48,8 @@ export const generateImage = async (prompt: string): Promise<string> => {
             },
         });
 
-        if (response.generatedImages && response.generatedImages.length > 0) {
-            const base64ImageBytes = response.generatedImages[0].image.imageBytes;
+        const base64ImageBytes = response.generatedImages?.[0]?.image?.imageBytes;
+        if (base64ImageBytes) {
             return `data:image/png;base64,${base64ImageBytes}`;
         }
         throw new Error("Không có hình ảnh nào được tạo.");
@@ -102,7 +102,10 @@ export const generateMindMapData = async (topic: string): Promise<MindMapNode> =
                 },
             },
         });
-
+        
+        if (!response.text) {
+            throw new Error("Không có phản hồi văn bản từ model.");
+        }
         const jsonString = response.text.trim();
         const data = JSON.parse(jsonString);
         return data as MindMapNode;
