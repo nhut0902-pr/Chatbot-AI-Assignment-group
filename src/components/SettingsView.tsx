@@ -16,6 +16,16 @@ const SettingsView: React.FC = () => {
         setSystemPrompt(prompt);
         alert("Đã lưu hướng dẫn cho AI!");
     };
+
+    const accentClassMap = {
+        indigo: { bg: 'bg-indigo-600', hover: 'hover:bg-indigo-700', ring: 'focus:ring-indigo-500', ring_offset: 'ring-indigo-500' },
+        blue: { bg: 'bg-blue-600', hover: 'hover:bg-blue-700', ring: 'focus:ring-blue-500', ring_offset: 'ring-blue-500' },
+        green: { bg: 'bg-green-600', hover: 'hover:bg-green-700', ring: 'focus:ring-green-500', ring_offset: 'ring-green-500' },
+        orange: { bg: 'bg-orange-600', hover: 'hover:bg-orange-700', ring: 'focus:ring-orange-500', ring_offset: 'ring-orange-500' },
+        rose: { bg: 'bg-rose-600', hover: 'hover:bg-rose-700', ring: 'focus:ring-rose-500', ring_offset: 'ring-rose-500' },
+    };
+
+    const currentAccent = accentClassMap[settings.accentColor] || accentClassMap.indigo;
     
     const accentColorOptions: { name: AccentColor, class: string }[] = [
         { name: 'indigo', class: 'bg-indigo-500' },
@@ -54,7 +64,7 @@ const SettingsView: React.FC = () => {
                                 <button 
                                     key={color.name}
                                     onClick={() => setAccentColor(color.name)}
-                                    className={`w-8 h-8 rounded-full ${color.class} ${settings.accentColor === color.name ? 'ring-2 ring-offset-2 ring-offset-slate-200 dark:ring-offset-slate-800 ring-blue-500' : ''}`}
+                                    className={`w-8 h-8 rounded-full ${color.class} ${settings.accentColor === color.name ? `ring-2 ring-offset-2 ring-offset-slate-200 dark:ring-offset-slate-800 ${currentAccent.ring_offset}` : ''}`}
                                     aria-label={`Select ${color.name} color`}
                                 />
                             ))}
@@ -70,12 +80,12 @@ const SettingsView: React.FC = () => {
                         value={prompt}
                         onChange={(e) => setPrompt(e.target.value)}
                         placeholder="VD: Bạn là một nhà thơ chuyên nghiệp, hãy trả lời mọi thứ bằng một bài thơ..."
-                        className="w-full bg-slate-300 dark:bg-slate-700 text-slate-900 dark:text-slate-200 rounded-lg p-4 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                        className={`w-full bg-slate-300 dark:bg-slate-700 text-slate-900 dark:text-slate-200 rounded-lg p-4 resize-none focus:outline-none focus:ring-2 ${currentAccent.ring}`}
                         rows={6}
                     />
                     <button
                         onClick={handlePromptSave}
-                        className="mt-4 w-full flex justify-center items-center bg-indigo-600 text-white font-bold py-3 px-4 rounded-lg hover:bg-indigo-700 transition-colors duration-300"
+                        className={`mt-4 w-full flex justify-center items-center ${currentAccent.bg} text-white font-bold py-3 px-4 rounded-lg ${currentAccent.hover} transition-colors duration-300`}
                     >
                        Lưu hướng dẫn
                     </button>

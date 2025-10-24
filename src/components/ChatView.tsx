@@ -25,7 +25,7 @@ const ChatView: React.FC = () => {
     const fileInputRef = useRef<HTMLInputElement>(null);
     const chatRef = useRef<Chat | null>(null);
     
-    const { systemPrompt } = useContext(SettingsContext);
+    const { systemPrompt, accentColor } = useContext(SettingsContext);
 
     useEffect(() => {
         // Khởi tạo phiên chat khi component được mount hoặc khi system prompt thay đổi
@@ -100,11 +100,21 @@ const ChatView: React.FC = () => {
         }
     };
 
+    const accentClassMap = {
+        indigo: { bg: 'bg-indigo-600', hover: 'hover:bg-indigo-700', ring: 'focus:ring-indigo-500' },
+        blue: { bg: 'bg-blue-600', hover: 'hover:bg-blue-700', ring: 'focus:ring-blue-500' },
+        green: { bg: 'bg-green-600', hover: 'hover:bg-green-700', ring: 'focus:ring-green-500' },
+        orange: { bg: 'bg-orange-600', hover: 'hover:bg-orange-700', ring: 'focus:ring-orange-500' },
+        rose: { bg: 'bg-rose-600', hover: 'hover:bg-rose-700', ring: 'focus:ring-rose-500' },
+    };
+
+    const currentAccent = accentClassMap[accentColor] || accentClassMap.indigo;
+
     return (
         <div className="flex flex-col h-full bg-slate-100 dark:bg-slate-900">
             <header className="flex items-center justify-between p-4 border-b border-slate-300 dark:border-slate-700">
                 <h2 className="text-xl font-bold">Gia sư AI</h2>
-                <button onClick={handleNewChat} className="flex items-center gap-2 px-3 py-2 text-sm font-semibold bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition-colors">
+                <button onClick={handleNewChat} className={`flex items-center gap-2 px-3 py-2 text-sm font-semibold ${currentAccent.bg} text-white rounded-lg ${currentAccent.hover} transition-colors`}>
                     <PlusIcon />
                     Cuộc trò chuyện mới
                 </button>
@@ -114,7 +124,7 @@ const ChatView: React.FC = () => {
                     <div key={index} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                         <div className={`max-w-xl lg:max-w-3xl px-5 py-3 rounded-2xl shadow-md transition-colors ${
                             msg.role === 'user' 
-                                ? 'bg-indigo-600 text-white' 
+                                ? `${currentAccent.bg} text-white` 
                                 : `bg-slate-200 dark:bg-slate-700 text-slate-800 dark:text-slate-200 ${msg.isError ? 'border border-red-500' : ''}`
                         }`}>
                             {msg.parts.map((part, partIndex) => (
@@ -156,7 +166,7 @@ const ChatView: React.FC = () => {
                             onChange={(e) => setInput(e.target.value)}
                             onKeyPress={handleKeyPress}
                             placeholder="Hỏi bất cứ điều gì hoặc mô tả vấn đề bạn cần giúp..."
-                            className="w-full bg-slate-300 dark:bg-slate-700 text-slate-900 dark:text-slate-200 rounded-lg p-4 pr-28 resize-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                            className={`w-full bg-slate-300 dark:bg-slate-700 text-slate-900 dark:text-slate-200 rounded-lg p-4 pr-28 resize-none focus:outline-none focus:ring-2 ${currentAccent.ring}`}
                             rows={1}
                         />
                         <div className="absolute right-3 flex items-center">
